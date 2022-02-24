@@ -36,9 +36,12 @@ const DataSearchForm = () => {
     return `please input ${name}`;
   }, []);
 
-  const disabledDate = useCallback((current: Moment) => {
-    return current && current < moment(formData.startDate).endOf('day');
-  }, []);
+  const disabledDate = useCallback(
+    (current: Moment) => {
+      return current && current < moment(formData.startDate).endOf('day');
+    },
+    [formData.startDate],
+  );
 
   const onFinish = () => {
     console.log(formData);
