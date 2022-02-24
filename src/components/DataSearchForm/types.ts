@@ -1,8 +1,7 @@
 import { valueType } from 'antd/lib/statistic/utils';
 import { INPUT_FORM_DATA } from './constants';
-
 export type SearchFormData = {
-  startDate: string;
+  startDate: string | undefined;
   endDate: string;
   category: valueType | undefined;
   keyword: string;

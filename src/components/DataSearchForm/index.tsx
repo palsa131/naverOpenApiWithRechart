@@ -1,7 +1,7 @@
 import { Button, Col, DatePicker, Form, Input, InputNumber, Row, Select } from 'antd';
 import { valueType } from 'antd/lib/statistic/utils';
 import moment, { Moment } from 'moment';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { INPUT_FORM_DATA } from './constants';
 import { SearchFormData, TimeUnit } from './types';
 
@@ -15,6 +15,7 @@ const DataSearchForm = () => {
     keyword: '',
     timeUnit: 'month',
   });
+  const [endDateDisabled, setEndDateDisabled] = useState(true);
 
   const handleFormData = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
@@ -32,6 +33,11 @@ const DataSearchForm = () => {
     setFormData((prev) => ({ ...prev, category: value }));
   }, []);
 
+  const handleStartDateChange = useCallback((value: Moment | null) => {
+    const valueToString = value?.format('YYYY-MM-DD');
+    setFormData((prev) => ({ ...prev, startDate: valueToString }));
+  }, []);
+
   const warnMessage = useCallback((name: string) => {
     return `please input ${name}`;
   }, []);
@@ -42,6 +48,10 @@ const DataSearchForm = () => {
     },
     [formData.startDate],
   );
+
+  useEffect(() => {
+    formData.startDate ? setEndDateDisabled(false) : setEndDateDisabled(true);
+  }, [formData.startDate]);
 
   const onFinish = () => {
     console.log(formData);
@@ -59,7 +69,7 @@ const DataSearchForm = () => {
             <DatePicker
               name={INPUT_FORM_DATA.startDate.name}
               placeholder={INPUT_FORM_DATA.startDate.name}
-              onBlur={handleFormData}
+              onChange={handleStartDateChange}
             />
           </Form.Item>
           <Form.Item
@@ -68,6 +78,7 @@ const DataSearchForm = () => {
             rules={[{ required: true, message: warnMessage(INPUT_FORM_DATA.endDate.name) }]}
           >
             <DatePicker
+              disabled={endDateDisabled}
               disabledDate={disabledDate}
               name={INPUT_FORM_DATA.endDate.name}
               placeholder={INPUT_FORM_DATA.endDate.name}
