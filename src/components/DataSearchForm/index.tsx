@@ -1,41 +1,40 @@
 import { Button, Col, DatePicker, Form, Input, InputNumber, Row, Select } from 'antd';
 import { valueType } from 'antd/lib/statistic/utils';
-import moment, { Moment } from 'moment';
+import { Moment } from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux';
+import { setSearchFormData } from '../../redux/searchFormData';
 import { INPUT_FORM_DATA } from './constants';
-import { SearchFormData, TimeUnit } from './types';
+import { TimeUnit } from './types';
+import { stringToMoment } from './utils';
 
 const { Option } = Select;
 
 const DataSearchForm = () => {
-  const [formData, setFormData] = useState<SearchFormData>({
-    startDate: '',
-    endDate: '',
-    category: '',
-    keyword: '',
-    timeUnit: 'month',
-  });
   const [endDateDisabled, setEndDateDisabled] = useState(true);
+  const dispatch = useDispatch();
+  const searchFormData = useSelector((store: RootState) => store.searchFormData);
 
   const handleFormData = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     if (value.length < 1) return;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    dispatch(setSearchFormData({ [name]: value }));
   }, []);
 
   const handleOptionChange = useCallback((value: TimeUnit, option: any) => {
     let data = '';
     !option.length ? (data = option.listname) : (data = option[0].listname);
-    setFormData((prev) => ({ ...prev, [data]: value }));
+    dispatch(setSearchFormData({ [data]: value }));
   }, []);
 
   const handleCategoryChange = useCallback((value: valueType) => {
-    setFormData((prev) => ({ ...prev, category: value }));
+    dispatch(setSearchFormData({ category: value.toString() }));
   }, []);
 
   const handleStartDateChange = useCallback((value: Moment | null) => {
     const valueToString = value?.format('YYYY-MM-DD');
-    setFormData((prev) => ({ ...prev, startDate: valueToString }));
+    dispatch(setSearchFormData({ startDate: valueToString }));
   }, []);
 
   const warnMessage = useCallback((name: string) => {
@@ -44,17 +43,21 @@ const DataSearchForm = () => {
 
   const disabledDate = useCallback(
     (current: Moment) => {
-      return current && current < moment(formData.startDate).endOf('day');
+      return current && current < stringToMoment(searchFormData.startDate);
     },
-    [formData.startDate],
+    [searchFormData.startDate],
   );
 
   useEffect(() => {
-    formData.startDate ? setEndDateDisabled(false) : setEndDateDisabled(true);
-  }, [formData.startDate]);
+    searchFormData.startDate ? setEndDateDisabled(false) : setEndDateDisabled(true);
+  }, [searchFormData.startDate]);
+
+  useEffect(() => {
+    console.log(searchFormData);
+  }, [searchFormData]);
 
   const onFinish = () => {
-    console.log(formData);
+    console.log(searchFormData);
   };
 
   return (
@@ -67,6 +70,7 @@ const DataSearchForm = () => {
             rules={[{ required: true, message: warnMessage(INPUT_FORM_DATA.startDate.name) }]}
           >
             <DatePicker
+              value={stringToMoment(searchFormData.startDate)}
               name={INPUT_FORM_DATA.startDate.name}
               placeholder={INPUT_FORM_DATA.startDate.name}
               onChange={handleStartDateChange}
@@ -78,6 +82,7 @@ const DataSearchForm = () => {
             rules={[{ required: true, message: warnMessage(INPUT_FORM_DATA.endDate.name) }]}
           >
             <DatePicker
+              value={stringToMoment(searchFormData.endDate)}
               disabled={endDateDisabled}
               disabledDate={disabledDate}
               name={INPUT_FORM_DATA.endDate.name}
@@ -91,11 +96,11 @@ const DataSearchForm = () => {
             rules={[{ required: true, message: warnMessage(INPUT_FORM_DATA.category.name) }]}
           >
             <InputNumber
-              type={'number'}
+              type="number"
               controls={false}
               placeholder={INPUT_FORM_DATA.category.name}
               name={INPUT_FORM_DATA.category.name}
-              value={formData.category}
+              value={searchFormData.category}
               onChange={handleCategoryChange}
             />
           </Form.Item>
@@ -104,7 +109,11 @@ const DataSearchForm = () => {
             name={INPUT_FORM_DATA.keyword.name}
             rules={[{ required: true, message: warnMessage(INPUT_FORM_DATA.keyword.name) }]}
           >
-            <Input placeholder={INPUT_FORM_DATA.keyword.name} onBlur={handleFormData} />
+            <Input
+              placeholder={INPUT_FORM_DATA.keyword.name}
+              value={searchFormData.keyword}
+              onBlur={handleFormData}
+            />
           </Form.Item>
         </Row>
         <br />
