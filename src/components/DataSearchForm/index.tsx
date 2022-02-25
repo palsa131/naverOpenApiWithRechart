@@ -73,6 +73,7 @@ const DataSearchForm = () => {
             rules={[{ required: true, message: WARN_MESSAGE.keyword }]}
           >
             <Input
+              name={INPUT_FORM_DATA.keyword.name}
               placeholder={INPUT_FORM_DATA.keyword.name}
               value={searchFormData.keyword}
               onBlur={handleFormData}
