@@ -1,44 +1,15 @@
 import { Button, Col, DatePicker, Form, Input, InputNumber, Row, Select } from 'antd';
-import { valueType } from 'antd/lib/statistic/utils';
-import { Moment } from 'moment';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux';
-import { setSearchFormData } from '../../redux/searchFormData';
+import React, { useEffect, useState } from 'react';
 import { INPUT_FORM_DATA, WARN_MESSAGE } from './constants';
-import { TimeUnit } from './types';
+import useSearchFormData from './useSearchFormData';
 import { stringToMoment } from './utils';
 
 const { Option } = Select;
 
 const DataSearchForm = () => {
   const [endDateDisabled, setEndDateDisabled] = useState(true);
-  const dispatch = useDispatch();
-  const searchFormData = useSelector((store: RootState) => store.searchFormData);
-
-  const handleFormData = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-    if (value.length < 1) return;
-    dispatch(setSearchFormData({ [name]: value }));
-  }, []);
-
-  const handleOptionChange = useCallback((value: TimeUnit, option: any) => {
-    let data = '';
-    !option.length ? (data = option.listname) : (data = option[0].listname);
-    dispatch(setSearchFormData({ [data]: value }));
-  }, []);
-
-  const handleStartDateChange = useCallback((value: Moment | null) => {
-    const valueToString = value?.format('YYYY-MM-DD');
-    dispatch(setSearchFormData({ startDate: valueToString }));
-  }, []);
-
-  const disabledDate = useCallback(
-    (current: Moment) => {
-      return current && current < stringToMoment(searchFormData.startDate);
-    },
-    [searchFormData.startDate],
-  );
+  const [searchFormData, handleFormData, handleOptionChange, handleStartDateChange, disabledDate] =
+    useSearchFormData();
 
   useEffect(() => {
     searchFormData.startDate ? setEndDateDisabled(false) : setEndDateDisabled(true);
