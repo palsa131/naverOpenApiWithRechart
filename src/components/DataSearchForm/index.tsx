@@ -28,10 +28,6 @@ const DataSearchForm = () => {
     dispatch(setSearchFormData({ [data]: value }));
   }, []);
 
-  const handleCategoryChange = useCallback((value: valueType) => {
-    dispatch(setSearchFormData({ category: value.toString() }));
-  }, []);
-
   const handleStartDateChange = useCallback((value: Moment | null) => {
     const valueToString = value?.format('YYYY-MM-DD');
     dispatch(setSearchFormData({ startDate: valueToString }));
@@ -97,7 +93,7 @@ const DataSearchForm = () => {
               placeholder={INPUT_FORM_DATA.category.name}
               name={INPUT_FORM_DATA.category.name}
               value={searchFormData.category}
-              onChange={handleCategoryChange}
+              onBlur={handleFormData}
             />
           </Form.Item>
           <Form.Item
