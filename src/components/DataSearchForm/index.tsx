@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux';
 import { setSearchFormData } from '../../redux/searchFormData';
-import { INPUT_FORM_DATA } from './constants';
+import { INPUT_FORM_DATA, WARN_MESSAGE } from './constants';
 import { TimeUnit } from './types';
 import { stringToMoment } from './utils';
 
@@ -37,10 +37,6 @@ const DataSearchForm = () => {
     dispatch(setSearchFormData({ startDate: valueToString }));
   }, []);
 
-  const warnMessage = useCallback((name: string) => {
-    return `please input ${name}`;
-  }, []);
-
   const disabledDate = useCallback(
     (current: Moment) => {
       return current && current < stringToMoment(searchFormData.startDate);
@@ -67,7 +63,7 @@ const DataSearchForm = () => {
           <Form.Item
             label={INPUT_FORM_DATA.startDate.label}
             name={INPUT_FORM_DATA.startDate.name}
-            rules={[{ required: true, message: warnMessage(INPUT_FORM_DATA.startDate.name) }]}
+            rules={[{ required: true, message: WARN_MESSAGE.startDate }]}
           >
             <DatePicker
               value={stringToMoment(searchFormData.startDate)}
@@ -79,7 +75,7 @@ const DataSearchForm = () => {
           <Form.Item
             label={INPUT_FORM_DATA.endDate.label}
             name={INPUT_FORM_DATA.endDate.name}
-            rules={[{ required: true, message: warnMessage(INPUT_FORM_DATA.endDate.name) }]}
+            rules={[{ required: true, message: WARN_MESSAGE.endDate }]}
           >
             <DatePicker
               value={stringToMoment(searchFormData.endDate)}
@@ -93,7 +89,7 @@ const DataSearchForm = () => {
           <Form.Item
             label={INPUT_FORM_DATA.category.label}
             name={INPUT_FORM_DATA.category.name}
-            rules={[{ required: true, message: warnMessage(INPUT_FORM_DATA.category.name) }]}
+            rules={[{ required: true, message: WARN_MESSAGE.category }]}
           >
             <InputNumber
               type="number"
@@ -107,7 +103,7 @@ const DataSearchForm = () => {
           <Form.Item
             label={INPUT_FORM_DATA.keyword.label}
             name={INPUT_FORM_DATA.keyword.name}
-            rules={[{ required: true, message: warnMessage(INPUT_FORM_DATA.keyword.name) }]}
+            rules={[{ required: true, message: WARN_MESSAGE.keyword }]}
           >
             <Input
               placeholder={INPUT_FORM_DATA.keyword.name}
@@ -121,7 +117,7 @@ const DataSearchForm = () => {
           <Col span={3}>
             <Form.Item
               name={INPUT_FORM_DATA.timeUnit.name}
-              rules={[{ required: true, message: warnMessage(INPUT_FORM_DATA.timeUnit.name) }]}
+              rules={[{ required: true, message: WARN_MESSAGE.timeUnit }]}
             >
               <Select placeholder="timeUnit" onChange={handleOptionChange}>
                 {Object.entries(INPUT_FORM_DATA.timeUnit.options).map((item) => (

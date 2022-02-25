@@ -1,3 +1,5 @@
+import { warnMessageMaker } from './utils';
+
 export const INPUT_FORM_DATA = {
   startDate: {
     name: 'startDate',
@@ -46,4 +48,12 @@ export const INPUT_FORM_DATA = {
       60: '60대 이상',
     },
   },
+};
+
+export const WARN_MESSAGE = {
+  startDate: warnMessageMaker(INPUT_FORM_DATA.startDate.name),
+  endDate: warnMessageMaker(INPUT_FORM_DATA.endDate.name),
+  category: warnMessageMaker(INPUT_FORM_DATA.category.name) + ' (only number)',
+  keyword: warnMessageMaker(INPUT_FORM_DATA.keyword.name),
+  timeUnit: warnMessageMaker(INPUT_FORM_DATA.timeUnit.name),
 };
