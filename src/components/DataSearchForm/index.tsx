@@ -1,12 +1,17 @@
 import { Button, Col, DatePicker, Form, Input, InputNumber, Row, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { SearchFormDataType } from '../../redux/searchFormData/types';
 import { INPUT_FORM_DATA, WARN_MESSAGE } from './constants';
 import useSearchFormData from './useSearchFormData';
 import { stringToMoment } from './utils';
 
 const { Option } = Select;
 
-const DataSearchForm = () => {
+interface DataSearchFormProps {
+  handleOnFinish(searchFormData: SearchFormDataType): void;
+}
+
+const DataSearchForm = ({ handleOnFinish }: DataSearchFormProps) => {
   const [endDateDisabled, setEndDateDisabled] = useState(true);
   const [searchFormData, handleFormData, handleOptionChange, handleStartDateChange, disabledDate] =
     useSearchFormData();
@@ -15,12 +20,8 @@ const DataSearchForm = () => {
     searchFormData.startDate ? setEndDateDisabled(false) : setEndDateDisabled(true);
   }, [searchFormData.startDate]);
 
-  useEffect(() => {
-    console.log(searchFormData);
-  }, [searchFormData]);
-
-  const onFinish = () => {
-    console.log(searchFormData);
+  const onFinish = async () => {
+    handleOnFinish(searchFormData);
   };
 
   return (
