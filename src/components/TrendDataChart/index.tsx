@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Legend, Line, LineChart, XAxis, YAxis } from 'recharts';
+import { Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
 import { LINE_COLOR } from './constants';
 
 const TrendDataChart = ({ data }: any) => {
@@ -27,8 +27,9 @@ const TrendDataChart = ({ data }: any) => {
       <XAxis dataKey="period" />
       <YAxis />
       <Legend verticalAlign="top" height={36} />
+      <Tooltip cursor={{ stroke: 'red', strokeWidth: 1 }} />
       {ages?.map((v: string) => (
-        <Line key={v} type="monotone" dataKey={v} stroke={`${LINE_COLOR[v]}`} />
+        <Line key={v} name={`${v}대`} type="monotone" dataKey={v} stroke={`${LINE_COLOR[v]}`} />
       ))}
     </LineChart>
   );
