@@ -14,7 +14,7 @@ const DataSearchPage = () => {
   return (
     <Wrapper>
       <DataSearchForm handleOnFinish={handleOnFinish} />
-      <TrendDataChart data={responseData}></TrendDataChart>
+      {responseData && <TrendDataChart data={responseData}></TrendDataChart>}
     </Wrapper>
   );
 };
