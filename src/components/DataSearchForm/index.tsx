@@ -13,8 +13,14 @@ interface DataSearchFormProps {
 
 const DataSearchForm = ({ handleOnFinish }: DataSearchFormProps) => {
   const [endDateDisabled, setEndDateDisabled] = useState(true);
-  const [searchFormData, handleFormData, handleOptionChange, handleStartDateChange, disabledDate] =
-    useSearchFormData();
+  const [
+    searchFormData,
+    handleFormData,
+    handleOptionChange,
+    handleStartDateChange,
+    disabledDate,
+    handleAgesChange,
+  ] = useSearchFormData();
 
   useEffect(() => {
     searchFormData.startDate ? setEndDateDisabled(false) : setEndDateDisabled(true);
@@ -102,7 +108,7 @@ const DataSearchForm = ({ handleOnFinish }: DataSearchFormProps) => {
               style={{ minWidth: '100px' }}
               mode="multiple"
               placeholder="age"
-              onChange={handleOptionChange}
+              onChange={handleAgesChange}
             >
               {Object.entries(INPUT_FORM_DATA.ages.options).map((item) => (
                 <Option listname={INPUT_FORM_DATA.ages.name} key={item[0]} value={item[0]}>

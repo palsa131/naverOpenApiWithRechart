@@ -16,10 +16,14 @@ const useSearchFormData = () => {
     dispatch(setSearchFormData({ [name]: value }));
   }, []);
 
-  const handleOptionChange = useCallback((value: TimeUnit, option: any) => {
+  const handleOptionChange = useCallback((value: TimeUnit | string, option: any) => {
     let data = '';
     !option.length ? (data = option.listname) : (data = option[0].listname);
     dispatch(setSearchFormData({ [data]: value }));
+  }, []);
+
+  const handleAgesChange = useCallback((value: string) => {
+    dispatch(setSearchFormData({ ages: value }));
   }, []);
 
   const handleStartDateChange = useCallback((value: Moment | null) => {
@@ -39,6 +43,7 @@ const useSearchFormData = () => {
     handleOptionChange,
     handleStartDateChange,
     disabledDate,
+    handleAgesChange,
   ] as const;
 };
 export default useSearchFormData;
