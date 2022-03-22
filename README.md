@@ -1,46 +1,24 @@
-# Getting Started with Create React App
+## 빌드 방법
+1. yarn 으로 패키지 설치
+2. .env 파일에 다음을 추가
+  - REACT_APP_NAVER_CLIENT_ID=/* 발급받은 ID */
+  - REACT_APP_NAVER_SECRET=/* 발급받은 SECRET */
+3. yarn start
+## 프로젝트 설명
+### 프로젝트 개요
+- 네이버 Open API(쇼핑 인사이트)를 활용하여 주어진 검색어에 대한 반환 결과를 그래프를 활용하여 시각적으로 표현합니다.
+- 작업기간 : 2022.02.23 ~ 2022.02.26
+### 기술 스택
+- REACT( Functional Component )
+- Redux
+- UI : Antd UI, styled-components
+- CRACO
+- ESlint, Prettier
+- Language: TypeScript
+- 그래프 : recharts
+- axios
+### 화면 예시
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 개선 필요사항
+1. Antd를 조금 더 학습하여 화면을 꺠지지 않도록 조정이 필요하다.
+2. Redux-persist, Redux-saga를 적용
