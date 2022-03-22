@@ -18,6 +18,7 @@
 - 그래프 : recharts
 - axios
 ### 화면 예시
+![test](https://user-images.githubusercontent.com/68111046/159412777-f419ff0b-2e6c-4b80-8932-815998d7937c.gif)
 
 ### 개선 필요사항
 1. Antd를 조금 더 학습하여 화면을 꺠지지 않도록 조정이 필요하다.
